@@ -13,11 +13,11 @@ public class Customer implements Serializable {
 	public Customer() {
 	}
 	// 全フィールドを初期化するコンストラクタ
-	public Customer(int id, String login, String password) {
+	public Customer(int id, String login, String password, int totalPoint) {
 		this.id = id;
 		this.login = login;
 		this.password = password;
-		this.totalPoint = 0; // 初回ログイン及び、再ログイン時は0ポイントからスタート
+		this.totalPoint = totalPoint;
 	}
 	
 	// クイズクリア時にポイントを累積加算するためのメソッド

@@ -18,8 +18,10 @@ public class QuizStartAction extends Action {
 		HttpSession session = request.getSession();
 		QuizDAO quizDAO = new QuizDAO();
 		
-//		クイズを１０問取得　数字を変更することで問題数を変更可能
-		List<Quiz> quizList = quizDAO.getRandomQuizzes(10);
+//		問題数
+		int limit = 10;
+		
+		List<Quiz> quizList = quizDAO.getRandomQuizzes(limit);
 		
 		if(quizList == null) {
 			request.setAttribute("error", "クイズデータの読み込みに失敗しました。");

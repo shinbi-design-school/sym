@@ -4,6 +4,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 
+import model.DAO.CustomerDAO;
 import model.bean.Customer;
 import model.bean.Result;
 import model.tool.Action;
@@ -35,11 +36,17 @@ public class QuizAction extends Action {
 //			customerをセッション属性から取得しポイントを加算
 			Customer customer = (Customer)session.getAttribute("customer");
 			customer.addPoint(quizSession.getScore());
+			// DBへ反映
+			CustomerDAO dao = new CustomerDAO();
+			dao.updatePoint(customer);
 			
-			return "WEB-INF/jsp/result.jsp";
+//			リクエスト属性にpointを保存
+			request.setAttribute("point", quizSession.getScore());
+			
+			return "/WEB-INF/jsp/result.jsp";
 		}
 		
-		return "WEB-INF/jsp/quiz.jsp";
+		return "/WEB-INF/jsp/quiz.jsp";
 	}
 
 }
