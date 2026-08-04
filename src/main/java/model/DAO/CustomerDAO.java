@@ -3,6 +3,8 @@ package model.DAO;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.util.ArrayList;
+import java.util.List;
 
 import model.bean.Customer;
 
@@ -49,4 +51,23 @@ public class CustomerDAO extends DAO {
 	        st.executeUpdate();
 	    }
 	}
+	
+	public List<Customer> searchRank() throws Exception {
+	    List<Customer> list = new ArrayList<>();
+	    String sql = "SELECT LOGIN, TOTALPOINT FROM CUSTOMER ORDER BY TOTALPOINT DESC LIMIT 3;";
+
+	    try (Connection con = getConnection();
+	         PreparedStatement ps = con.prepareStatement(sql);
+	         ResultSet rs = ps.executeQuery()) {
+
+	        while (rs.next()) {
+	            Customer c = new Customer();
+	            c.setLogin(rs.getString("LOGIN"));
+	            c.setTotalPoint(rs.getInt("TOTALPOINT"));
+	            list.add(c);
+	        }
+	    }
+	    return list;
+	}
+
 }

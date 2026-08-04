@@ -1,5 +1,7 @@
 package servlet;
 
+import java.util.List;
+
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
@@ -23,6 +25,9 @@ public class LoginAction extends Action {
 			request.setAttribute("error", "ログイン情報が一致しません。");
 			return "/WEB-INF/jsp/login.jsp";
 		}
+		
+		List<Customer> ranking = dao.searchRank();
+		request.setAttribute("ranking", ranking);
 		
 		session.setAttribute("customer", customer);
 		return "/WEB-INF/jsp/top.jsp";
