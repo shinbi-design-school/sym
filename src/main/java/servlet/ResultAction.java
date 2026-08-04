@@ -9,7 +9,7 @@ public class ResultAction extends Action {
 
 	@Override
 	public String execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
-		return "/WEB-INF/jsp/login-out.jsp";
+		return "/WEB-INF/jsp/top.jsp";
 	}
 
 }

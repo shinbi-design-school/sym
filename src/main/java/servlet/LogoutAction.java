@@ -13,7 +13,7 @@ public class LogoutAction extends Action {
 		HttpSession session = request.getSession();
 		session.invalidate();
 		
-		return "WEB-INF/jsp/login-in.jsp";
+		return "WEB-INF/jsp/login.jsp";
 	}
 
 }

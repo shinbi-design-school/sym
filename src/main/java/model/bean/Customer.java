@@ -21,8 +21,9 @@ public class Customer implements Serializable {
 	}
 	
 	// クイズクリア時にポイントを累積加算するためのメソッド
-	public void addPoint(int point) {
-		this.totalPoint += point;
+	//	10ポイント加算なので10としている
+	public void addPoint() {
+		this.totalPoint += 10;
 	}
 	
 	//フィールドの値を取得（ゲッタ）

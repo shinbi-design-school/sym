@@ -20,12 +20,12 @@ public class LoginAction extends Action {
 		Customer customer = dao.search(login, password);
 		
 		if(customer == null) {
-			request.setAttribute("error", "ログイン名またはパスワードが違います。");
-			return "/WEB-INF/jsp/login-in.jsp";
+			request.setAttribute("error", "ログイン情報が一致しません。");
+			return "/WEB-INF/jsp/login.jsp";
 		}
 		
 		session.setAttribute("customer", customer);
-		return "/WEB-INF/jsp/login-out.jsp";
+		return "/WEB-INF/jsp/top.jsp";
 	}
 	
 }

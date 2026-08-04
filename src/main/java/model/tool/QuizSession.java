@@ -39,6 +39,7 @@ public class QuizSession implements Serializable {
 
 		if (isCorrect) {
 			score+=10; // 正解ならスコアを増やす（＋１０）
+			
 		}
 		return isCorrect; // 正解ならtrue、不正解（✖）ならfalseを返す
 	}

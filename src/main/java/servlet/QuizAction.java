@@ -16,13 +16,22 @@ public class QuizAction extends Action {
 	public String execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		HttpSession session = request.getSession();
 		QuizSession quizSession = (QuizSession)session.getAttribute("quizSession");
+		CustomerDAO dao = new CustomerDAO();
+		Customer customer = (Customer)session.getAttribute("customer");
 		
-//		ラジオボタンの回答を取得し答え合わせ、スコア加算
+//		ラジオボタンの回答を取得
 		String answer = request.getParameter("answer");
 		Integer userAnswer = Integer.parseInt(answer);
 		
 //		これが答え合わせとスコア加算をしてる
-		quizSession.checkAnswer(userAnswer);
+		boolean correct = quizSession.checkAnswer(userAnswer);
+//		H2DBにアクセスし正解ならスコア加算
+		if(correct) {
+//			customerのトータルポイントを加算
+			customer.addPoint();
+			// DBへ反映
+			dao.updatePoint(customer);
+		}
 		
 //		次の問題にカウントを進める
 		quizSession.nextQuestion();
@@ -33,15 +42,10 @@ public class QuizAction extends Action {
 			Result result = new Result(quizSession.getTotalQuestions(), quizSession.getScore());
 			request.setAttribute("result", result);
 			
-//			customerをセッション属性から取得しポイントを加算
-			Customer customer = (Customer)session.getAttribute("customer");
-			customer.addPoint(quizSession.getScore());
-			// DBへ反映
-			CustomerDAO dao = new CustomerDAO();
-			dao.updatePoint(customer);
-			
 //			リクエスト属性にpointを保存
-			request.setAttribute("point", quizSession.getScore());
+			int point = result.getScore() / 10;
+			request.setAttribute("point", point);
+			
 			
 			return "/WEB-INF/jsp/result.jsp";
 		}

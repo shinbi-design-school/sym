@@ -25,7 +25,7 @@ public class QuizStartAction extends Action {
 		
 		if(quizList == null) {
 			request.setAttribute("error", "クイズデータの読み込みに失敗しました。");
-			return "/WEB-INF/jsp/login-out.jsp";
+			return "/WEB-INF/jsp/top.jsp";
 		}
 		
 //		セッション属性にquizSessionを保存

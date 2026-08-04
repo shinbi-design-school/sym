@@ -14,35 +14,57 @@
         quiz = quizSession.getCurrentQuiz(); 
     }
 %>	
-        <h1>４択クイズ</h1>
+	<main class="container">
         
         <%-- 【修正完了】Java側の定義に合わせて getQuestionNumber() で「第◯問」を表示 --%>
-        <% if (quizSession != null) { %>
-            <h3>第 <%= quizSession.getQuestionNumber() %> 問</h3>
-        <% } %>
-
-        <div id="error"><%= error != null ? error : "" %></div>
-
-        <% if (quiz != null) { %>
+        <!-- 問題文 -->
+        <section class="question-area">
+<% 
+	if (quizSession != null) { 
+%>
+            <h1>第 <%= quizSession.getQuestionNumber() %> 問</h1>
+<% 
+	} 
+%>
+<% 
+	if (quiz != null) { 
+%>
             <%-- クイズの問題文を表示 --%>
-            <p class="question"><strong>問題：<%= quiz.getQuestion() %></strong></p>
-
-            <%-- 送信先を Quiz.action に指定して doPost へ回答を送る --%>
-            <form action="Quiz.action" method="post">
-                <button type="submit" name="answer" value="1">① <%= quiz.getOption1() %></button>
-                <button type="submit" name="answer" value="2">② <%= quiz.getOption2() %></button>
-                <button type="submit" name="answer" value="3">③ <%= quiz.getOption3() %></button>
-                <button type="submit" name="answer" value="4">④ <%= quiz.getOption4() %></button>
+            <p><%= quiz.getQuestion() %></p>
+        </section>
+        
+        <!-- 選択肢 -->
+        <section class="select-area">
+            <form id ="quiz-form" action="Quiz.action" method="post">
+                <ol id="quiz-select">
+                    <li>
+                        <button type="submit" name="answer" value="1"><%= quiz.getOption1() %></button>
+                    </li>
+                    <li>
+                        <button type="submit" name="answer" value="2"><%= quiz.getOption2() %></button>
+                    </li>
+                    <li>
+                        <button type="submit" name="answer" value="3"><%= quiz.getOption3() %></button>
+                    </li>
+                    <li>
+                        <button type="submit" name="answer" value="4"><%= quiz.getOption4() %></button>
+                    </li>
+                </ol>
             </form>
-		<%
-			} else { 
-		%>
+        </section>
+<%
+	} else { 
+%>
+        <!-- エラー -->
+        <section id="error">
             <p>クイズデータが見つかりません。最初からやり直してください。</p>
-			<form action="QuizStart.action" method="post">
-				<button type="submit"></button>
-			</form>
-        <%
-			} 
-		%>
+            <form action="QuizStart.action" method="post">
+                <button type="submit">トップへ戻る</button>
+            </form>
+        </section>
+<%
+	} 
+%>
+    </main>
 		
 <%@include file="footer.jsp" %>
